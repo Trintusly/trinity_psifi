@@ -82,7 +82,7 @@ php artisan serve
 
 ## Deployment links
 
-**Live Demo:** [Insert link here]
+**Live Demo:** https://webshark.rbx.zone/
 
 ## Deployment Steps
 
