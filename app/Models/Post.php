@@ -9,6 +9,8 @@ class Post extends Model
     protected $fillable = [
         'body',
         'image',
+        'is_share',
+        'share_of',
     ];
 
     public static function parseBBCode($bbcode)
@@ -42,6 +44,25 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'post_likes')->withTimestamps();
+    }
+    
+    // In the Post model
+    public function likedByUser($user)
+    {
+        // Assuming the relationship between User and Post is many-to-many via a pivot table (e.g., post_likes)
+        return $this->likes()->where('user_id', $user->id)->exists();
+    }
 
 
+    public function originalPost()
+    {
+        return $this->belongsTo(Post::class, 'share_of');
+    }
+    public function originalPostUser()
+    {
+        return $this->belongsTo(Post::class, 'share_of')->with('user');
+    }
 }

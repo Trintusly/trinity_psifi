@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('bio')->default("Hey there, I use Trinity!");
             $table->string('email')->unique();
+            $table->string('picture')->default("default");
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

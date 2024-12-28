@@ -5,7 +5,7 @@
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-6-tablet is-5-desktop is-5-widescreen">
-                    <div class="box">
+                     <div class="box">
                         <div class="is-size-5">Login</div>
                         <div class="is-size-6 has-text-grey-light mb-3">Lets continue from where you left</div>
                         <form method="POST" action="{{ route('login::login') }}">
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="field">
                                     <div class="buttons">
-                                        <button type="submit" class="button is-info">Login</button>
+                                        <button type="submit" class="button is-primary">Login</button>
                                     </div>
                                 </div>
                             </fieldset>

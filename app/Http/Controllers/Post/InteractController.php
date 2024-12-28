@@ -21,4 +21,28 @@ class InteractController extends Controller
 
         return back();
     }
+
+    public function like($id)
+    {
+        $post = Post::findOrFail($id);
+        $user = auth()->user();
+
+        if ($post->likedByUser($user)) {
+            // Unlike the post
+            $post->likes()->detach($user->id);
+            $liked = false;
+        } else {
+            // Like the post
+            $post->likes()->attach($user->id);
+            $liked = true;
+        }
+
+        $likeCount = $post->likes()->count();
+
+        return response()->json([
+            'liked' => $liked,
+            'like_count' => $likeCount,
+        ]);
+    }
+
 }

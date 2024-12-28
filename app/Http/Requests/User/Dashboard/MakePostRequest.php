@@ -22,8 +22,8 @@ class MakePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'body' => 'required|min:1|max:256',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'body' => 'required|min:1|max:512',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png|max:10000', // Max 10MB
         ];
     }
 }

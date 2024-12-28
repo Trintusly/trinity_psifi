@@ -1,45 +1,106 @@
 @extends('layouts.main')
+
 @section('content')
 
     <div class="container">
         <section class="section">
             <div class="columns is-centered">
                 <div class="column is-6">
-                    <a href="/">Go back</a>
-                    <div class="box mt-2">
+                    @if ($post->is_share != 0 && $post->share_of)
+                        <div class="title is-4">View share</div>
+                        <div class="subtitle is-grey is-7">Viewing share by [<strong>{{ $post->user->username }}</strong> <span
+                                    class="subtitle is-7">{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</span>]
+                            on
+                            [<strong>{{ $post->originalPostUser->user->username }}</strong>'s post <span
+                                class="subtitle is-7">{{ Carbon\Carbon::parse($post->originalPost->created_at)->diffForHumans() }}</span>]
+                        </div>
+                    @else
+                        <div class="title is-4">View post</div>
+                        <div class="subtitle is-grey is-7">Viewing post by <strong>{{ $post->user->username }}</strong> made
+                            <strong> <span
+                                    class="subtitle is-7">{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</span></strong>
+                        </div>
+                    @endif
+                    <div class="box mt-2 mb-1">
+                        @if ($post->is_share != 0 && $post->share_of)
+                            <article class="media">
+
+                                <figure class="media-left">
+                                    <p class="image is-32x32">
+                                        <img src="{{ asset('images/users/' . $post->originalPostUser->user->picture . '.jpg') }}"
+                                            alt="User Profile Picture" class="profile-image">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="is-size-7">Original post by <strong>
+                                            <a>{{ $post->originalPostUser->user->username }}</a></strong>
+                                    </div>
+
+                                    <div class="is-size-7 mb-2">
+                                        <p>{!! nl2br(\App\Models\Post::parseBBCode($post->originalPost->body)) !!}</p>
+                                    </div>
+
+                                    @if ($post->originalPost->image != 0)
+                                        <figure class="image">
+                                            <img src="{{ asset('images/posts/' . $post->originalPost->image . '.jpg') }}"
+                                                alt="Post Image">
+                                        </figure>
+                                    @endif
+
+
+                                    <span class="is-size-7">
+                                        <a href="{{ route('post.view', ['id' => $post->originalPost->id]) }}">View
+                                            full
+                                            discussion</a></span>
+
+
+                                </div>
+                            </article>
+                        @endif
                         <article class="media">
                             <figure class="media-left">
                                 <p class="image is-32x32">
-                                    {{-- <img src="{{ $q->user->thumbnail_url }}" /> --}}
+                                    <img src="{{ asset('images/users/' . $post->user->picture . '.jpg') }}"
+                                        alt="User Profile Picture" class="profile-image">
                                 </p>
                             </figure>
                             <div class="media-content">
                                 <div class="content">
                                     <div class="title is-6 mb-1">{{ $post->user->username }}</div>
-                                    {{-- <div class="help is-grey m-0">x</div> --}}
                                     <p>{!! nl2br(\App\Models\Post::parseBBCode($post->body)) !!}</p>
+
+                                    @if ($post->image != 0)
+                                        <figure class="image">
+                                            <img src="{{ asset('images/posts/' . $post->image . '.jpg') }}"
+                                                alt="Post Image">
+                                        </figure>
+                                    @endif
                                 </div>
                                 <hr class="mt-1 mb-2">
-                                <a href="#" class="button is-small is-rounded is-danger">
-                                    Like
+                                <a href="javascript:void(0)" class="button is-danger is-small is-rounded"
+                                    id="like-btn-{{ $post->id }}" onclick="likePost({{ $post->id }})">
+                                    @if ($post->likedByUser(auth()->user()))
+                                        Unlike
+                                    @else
+                                        Like
+                                    @endif
                                 </a>
-                                <a href="#" class="button is-small is-rounded is-link">
-                                    Share
-                                </a>
+                                <a href="{{ route('user.dashboard.share::sharePost', ['post' => $post->id]) }}"
+                                    class="button is-small is-rounded is-link">Share</a>
 
                             </div>
-                            <!-- Admin and Online Status -->
-                            <div class="media-right is-hidden-mobile">
 
-                                <span
-                                    class="subtitle is-7">{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</span>
-                            </div>
                         </article>
 
 
                     </div>
-
-                    <div class="is-size-5">
+                    <span id="like-count-{{ $post->id }}" class="is-size-7 ">
+                        <strong>{{ $post->likes->count() }}</strong> Likes,
+                    </span>
+                    <span id="comment-count-{{ $post->id }}" class="is-size-7">
+                        <strong>{{ $post->comments->count() }}</strong> Comments
+                    </span>
+                    <div class="is-size-5 mt-3">
                         Comments
                     </div>
                     <div class="is-size-7 has-text-grey-light mb-2">
@@ -61,8 +122,6 @@
                             @enderror
                         </div>
 
-
-
                         <!-- Submit Button -->
                         <div class="field">
                             <div class="control">
@@ -73,35 +132,24 @@
 
                     <hr>
 
-
                     @forelse($comments as $c)
                         <div>
                             <div class="box mb-3">
-                                <article class="media">
+                                <article class="media is-align-items-center">
                                     <figure class="media-left">
                                         <p class="image is-32x32">
-                                            {{-- <img src="{{ $q->user->thumbnail_url }}" /> --}}
+                                            <img src="{{ asset('images/users/' . $c->user->picture . '.jpg') }}"
+                                                alt="User Profile Picture" class="profile-image">
                                         </p>
                                     </figure>
                                     <div class="media-content">
                                         <div class="content">
                                             <div class="title is-6 mb-1">{{ $c->user->username }}</div>
-                                            {{-- <div class="help is-grey m-0">x</div> --}}
                                             <p>{!! nl2br(\App\Models\Post::parseBBCode($c->body)) !!}</p>
                                         </div>
-                                        {{-- <hr class="mt-1 mb-2">
-                                        
-                                        <a href="#" class="button is-small is-rounded is-danger">
-                                            Like
-                                        </a>
-                                        <a href="#" class="button is-small is-rounded is-link">
-                                            Share
-                                        </a> --}}
-
                                     </div>
                                     <!-- Admin and Online Status -->
                                     <div class="media-right is-hidden-mobile">
-
                                         <span
                                             class="subtitle is-7">{{ Carbon\Carbon::parse($c->created_at)->diffForHumans() }}</span>
                                     </div>
@@ -115,8 +163,61 @@
                         {{ $comments->links('pagination::bulma') }}
                     </div>
                 </div>
+
+                <div class="column is-3">
+                    <div class="title is-6">Like list</div>
+                    <div class="subtitle is-grey is-7">View who liked this post
+                    </div>
+                    @forelse($likes as $like)
+                        <div>
+                            <div class="box mb-3 p-2">
+                                <article class="media is-align-items-center">
+
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <div class="is-size-7">{{ $like->username }}</div>
+
+                                        </div>
+                                    </div>
+                                    <figure class="media-right">
+                                        <p class="image is-32x32">
+                                            <img src="{{ asset('images/users/' . $like->picture . '.jpg') }}"
+                                                alt="User Profile Picture" class="profile-image">
+                                        </p>
+                                    </figure>
+                                </article>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="has-text-grey">No likes here...</div>
+                    @endforelse
+                </div>
             </div>
         </section>
     </div>
 
 @stop
+
+
+@push('scripts')
+    <script>
+        function likePost(postId) {
+            const likeBtn = document.getElementById('like-btn-' + postId);
+
+            fetch(`/post/interact/${postId}/like`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    window.location.reload();
+
+                })
+                .catch(error => console.log(error));
+        }
+    </script>
+@endpush

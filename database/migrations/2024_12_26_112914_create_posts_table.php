@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('body');
+            $table->longText('body');
             $table->string('image');
+            $table->integer('is_share')->default(0);
+            $table->integer('share_of')->default(0);
             $table->timestamps();
         });
     }

@@ -59,7 +59,7 @@
 
                                     <div class="field">
                                         <div class="buttons">
-                                            <button type="submit" class="button is-info">Register</button>
+                                            <button type="submit" class="button is-primary">Register</button>
                                         </div>
                                     </div>
                                 </fieldset>
