@@ -8,9 +8,18 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
+    /**
+     * Display the profile of a specific user based on their username.
+     *
+     * @param string $username The username of the user whose profile is to be displayed.
+     * @return \Illuminate\View\View The view displaying the user's profile.
+     */
     public function index($username)
     {
-        $user = User::where(["username" => $username])->firstOrFail(); // Fetch the post or return 404 if not found
-        return view("user.profile", ["user" => $user]);
+        // Fetch the user by their username or return a 404 error if not found
+        $user = User::where('username', $username)->firstOrFail();
+
+        // Return the profile view with the user data
+        return view("user.profile", ["user" => $user, "primaryStartup" => $user->primaryStartup()]);
     }
 }

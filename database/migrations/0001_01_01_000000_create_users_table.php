@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('picture')->default("default");
             $table->string('password');
+            $table->integer('primary_startup')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

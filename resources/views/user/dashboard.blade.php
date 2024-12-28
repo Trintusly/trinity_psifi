@@ -63,21 +63,49 @@
 
                     <!-- Startup Panel -->
                     <div class="box startup-box">
-                        <div class="title is-5 has-text-white">Startup Panel</div>
-                        <div class="subtitle has-text-white is-7 mb-5">Manage your startups</div>
-                        <div class="columns mb-2">
-                            <div class="column">
-                                <a href="{{ route('startup.new') }}"
-                                    class="button is-primary is-rounded is-fullwidth">New</a>
-                            </div>
-                            <div class="column">
-                                <a href="{{ route('user.startup.manage') }}"
-                                    class="button is-light is-rounded is-fullwidth">Manage</a>
-                            </div>
-                        </div>
+                        <div class="title is-5 has-text-white">Startup panel</div>
+                        <div class="subtitle has-text-white is-7 mb-2">Manage your startups</div>
+
+                        <a href="{{ route('startup.new') }}" class="button is-primary is-fullwidth is-small mb-2">New</a>
+
+                        <a href="{{ route('startup.list') }}" class="button is-light is-fullwidth is-small">List</a>
+
+
 
                         <hr class="m-2">
-                        <div class="subtitle is-grey has-text-white is-7 mb-2">Primary startup unset.</div>
+                        <div class="title is-5 has-text-white mt-2 mb-2">Primary startup</div>
+
+                        @if (!$primaryStartup)
+                            <div class="subtitle is-grey has-text-white is-7 mb-2">Primary startup unset.</div>
+                        @else
+                            <div class="box p-2">
+                                <article class="media is-align-items-center">
+
+                                    <!-- User Headshot -->
+                                    <div class="media-left">
+                                        <figure class="image is-64x64">
+                                            <img src="{{ asset('images/startups/' . $primaryStartup->logo . '.jpg') }}"
+                                                alt="User Profile Picture" class="profile-image">
+                                        </figure>
+                                    </div>
+
+                                    <!-- User Content -->
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <div class="is-size-5">
+                                                <a href="{{ route('startup.view', ['id' => $primaryStartup->id]) }}"
+                                                    class="is-link">
+                                                    <span>{{ $primaryStartup->display_name }}</span>
+                                                </a>
+                                            </div>
+                                            @if ($primaryStartup->creator_id == auth()->user()->id)
+                                                <a href="{{route('startup.manage', ['id' => $primaryStartup->id])}}" class="button is-small">Manage</a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        @endif
                     </div>
                 </div>
 

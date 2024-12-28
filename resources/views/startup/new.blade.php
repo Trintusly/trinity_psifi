@@ -10,6 +10,7 @@
                         <ul class="menu-list">
                             <li><a href="{{route('startup.new')}}" class="is-active">New</a></li>
                             <li><a href="{{route('startup.list')}}">List</a></li>
+                            <li><a href="{{ route('user.dashboard') }}">Go back</a></li>
                         </ul>
                     </aside>
                 </div>

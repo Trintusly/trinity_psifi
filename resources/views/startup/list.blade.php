@@ -10,6 +10,7 @@
                         <ul class="menu-list">
                             <li><a href="{{ route('startup.new') }}">New</a></li>
                             <li><a href="{{ route('startup.list') }}" class="is-active">List</a></li>
+                            <li><a href="{{ route('user.dashboard') }}">Go back</a></li>
                         </ul>
                     </aside>
                 </div>
@@ -35,6 +36,10 @@
                                                 href="{{ route('startup.view', ['id' => $startup->id]) }}"><span>{{ $startup->display_name }}</span></a>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="media-right">
+                                    <a href="{{route('startup.manage', ['id' => $startup->id])}}" class="button is-rounded is-small">Manage</a>
                                 </div>
 
                             </article>

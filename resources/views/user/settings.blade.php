@@ -1,38 +1,45 @@
 @extends('layouts.main')
+
 @section('content')
 
     <div class="container">
         <section class="section">
             <div class="columns is-centered">
                 <div class="column is-6">
+                    <!-- Settings Header -->
                     <div class="title is-4">Settings</div>
                     <div class="subtitle is-grey is-7">Change and view your account settings here</div>
+
+                    <!-- Display success notification if there is any -->
                     @if (session('success'))
                         <div class="notification is-success">
                             {{ session('success') }}
                         </div>
                     @endif
 
+                    <!-- Display errors if there are any -->
                     @if ($errors->any())
                         <div class="notification is-danger">
                             {{ $errors->first() }}
                         </div>
                     @endif
 
+                    <!-- Profile Picture and Form for updating -->
                     <div class="box">
                         <article class="media">
 
-                            <!-- User Headshot -->
+                            <!-- User Profile Picture -->
                             <div class="media-left">
                                 <figure class="image is-64x64">
                                     <img src="{{ asset('images/users/' . auth()->user()->picture . '.jpg') }}"
-                                        alt="User Profile Picture" class="profile-image">
+                                         alt="User Profile Picture" class="profile-image">
                                 </figure>
                             </div>
 
-                            <!-- User Content -->
+                            <!-- User Information and Form -->
                             <div class="media-content">
                                 <div class="content">
+                                    <!-- Display User Information (Username and Email) -->
                                     <div class="is-size-5">
                                         <span>{{ auth()->user()->username }}</span>
                                     </div>
@@ -40,20 +47,21 @@
                                         <span class="has-text-truncate">{{ auth()->user()->email }}</span>
                                     </div>
                                     <hr class="mb-2">
-                                    <form action="{{ route('user.settings::updatePicture') }}" method="POST"
-                                        enctype="multipart/form-data">
+
+                                    <!-- Form for updating profile picture -->
+                                    <form action="{{ route('user.settings::updatePicture') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="field">
-                                            <!-- File Input Field -->
                                             <div class="control">
+                                                <!-- Section for updating profile picture -->
                                                 <div class="title is-6">Update your picture</div>
-                                                <div class="subtitle is-grey is-7 mb-4">This picture will be shown on your
-                                                    posts, profile, etc</div>
-                                                <div
-                                                    class="file is-primary has-name is-fullwidth {{ $errors->has('picture') ? 'is-danger' : '' }}">
+                                                <div class="subtitle is-grey is-7 mb-4">
+                                                    This picture will be shown on your posts, profile, etc.
+                                                </div>
+                                                <div class="file is-primary has-name is-fullwidth {{ $errors->has('picture') ? 'is-danger' : '' }}">
                                                     <label class="file-label">
-                                                        <input class="file-input" type="file" name="picture"
-                                                            accept="image/*" required id="fileInput">
+                                                        <!-- File Input for choosing image -->
+                                                        <input class="file-input" type="file" name="picture" accept="image/*" required id="fileInput">
                                                         <span class="file-cta">
                                                             <span class="file-icon">
                                                                 <i class="fas fa-upload"></i>
@@ -63,26 +71,23 @@
                                                         <span class="file-name" id="fileName">No picture chosen</span>
                                                     </label>
                                                 </div>
+                                                
+                                                <!-- Display validation error for picture input -->
                                                 @if ($errors->has('picture'))
                                                     <p class="help is-danger mt-1">{{ $errors->first('picture') }}</p>
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="field">
 
-                                            <!-- Upload Button -->
+                                        <!-- Submit button for updating profile picture -->
+                                        <div class="field">
                                             <div class="control mt-2">
-                                                <button type="submit"
-                                                    class="button is-primary is-fullwidth is-rounded">Update</button>
+                                                <button type="submit" class="button is-primary is-fullwidth is-rounded">Update</button>
                                             </div>
                                         </div>
 
                                     </form>
                                 </div>
-                            </div>
-
-                            <!-- Admin and Online Status -->
-                            <div class="media-right is-hidden-mobile">
                             </div>
 
                         </article>
@@ -91,17 +96,18 @@
             </div>
         </section>
     </div>
-
+    
 @stop
 
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // File input change event listener
+            // Event listener to show the selected file name after choosing a picture
             const fileInput = document.getElementById('fileInput');
             const fileName = document.getElementById('fileName');
 
             fileInput.addEventListener('change', function(event) {
+                // Display file name or default message if no file is selected
                 if (event.target.files.length > 0) {
                     fileName.textContent = event.target.files[0].name;
                 } else {
