@@ -44,7 +44,8 @@
                                 <div class="media-content">
                                     <!-- Display details of the original post -->
                                     <div class="is-size-7">Original post by <strong>
-                                            <a>{{ $post->originalPostUser->user->username }}</a></strong>
+                                            <a
+                                                href="{{ route('user.profile', ['username' => $post->originalPostUser->user->username]) }}">{{ $post->originalPostUser->user->username }}</a></strong>
                                     </div>
 
                                     <div class="is-size-7 mb-2">
