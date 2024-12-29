@@ -15,11 +15,7 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
-<style>
-  .is-primary {
-    background-color: blueviolet;
-  }
-</style>
+
 <script>
     // JavaScript to toggle the navbar burger (menu) on small screens
     document.addEventListener("DOMContentLoaded", () => {
