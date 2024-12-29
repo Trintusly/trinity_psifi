@@ -9,7 +9,7 @@
     <title>Document</title>
 
     <!-- External CSS Libraries -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://vis.kqpa.me/style/bulma.light.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
 
     <!-- Custom Stylesheet -->
