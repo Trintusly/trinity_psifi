@@ -76,6 +76,7 @@
                         <div class="title is-5 has-text-white mt-2 mb-2">Primary startup</div>
 
                         @if (!$primaryStartup)
+                        <br>
                             <div class="subtitle is-grey has-text-white is-7 mb-2">Primary startup unset.</div>
                         @else
                             <div class="box p-2">
