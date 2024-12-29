@@ -76,8 +76,7 @@
                         <div class="title is-5 has-text-white mt-2 mb-2">Primary startup</div>
 
                         @if (!$primaryStartup)
-                        <br>
-                            <div class="subtitle is-grey has-text-white is-7 mb-2">Primary startup unset.</div>
+                            Primary startup unset.
                         @else
                             <div class="box p-2">
                                 <article class="media is-align-items-center">
@@ -100,7 +99,8 @@
                                                 </a>
                                             </div>
                                             @if ($primaryStartup->creator_id == auth()->user()->id)
-                                                <a href="{{route('startup.manage', ['id' => $primaryStartup->id])}}" class="button is-small">Manage</a>
+                                                <a href="{{ route('startup.manage', ['id' => $primaryStartup->id]) }}"
+                                                    class="button is-small">Manage</a>
                                             @endif
                                         </div>
                                     </div>
