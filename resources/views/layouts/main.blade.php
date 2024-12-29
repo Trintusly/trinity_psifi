@@ -142,10 +142,11 @@
                 <div class="column is-one-third">
                     <h3 class="title is-size-5 has-text-black">Quick Links</h3>
                     <ul>
-                        <li><a href="#features" class="has-text-grey">Features</a></li>
-                        <li><a href="#pricing" class="has-text-grey">Pricing</a></li>
-                        <li><a href="#about" class="has-text-grey">About</a></li>
-                        <li><a href="#contact" class="has-text-grey">Contact</a></li>
+
+                        <li><a href="{{ route('home') }}"class="has-text-grey">Home</a></li>
+                        <li><a href="{{ route('feed') }}" class="has-text-grey">Feed</a></li>
+                        <li><a href="{{ route('search') }}" class="has-text-grey">Search</a></li>
+
                     </ul>
                 </div>
 
@@ -167,7 +168,7 @@
             </div>
         </div>
         <!-- Bottom Text outside the container -->
-        <div class="has-text-centered">
+        <div class="has-text-centered mt-3">
             <p class="is-size-7 has-text-grey">
                 &copy; 2024 Trinity. All rights reserved.
             </p>
