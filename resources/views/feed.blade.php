@@ -70,11 +70,10 @@
                                                     alt="Post Image">
                                             </figure>
                                         @endif
-
+                                        <hr class="mt-1 mb-2">
+                                        <a href="{{ route('post.view', ['id' => $post->id]) }}"
+                                            class="button is-small is-rounded">View Discussion</a>
                                         @if (auth()->check())
-                                            <hr class="mt-1 mb-2">
-                                            <a href="{{ route('post.view', ['id' => $post->id]) }}"
-                                                class="button is-small is-rounded">View Discussion</a>
                                             <a href="javascript:void(0)" class="button is-danger is-small is-rounded"
                                                 id="like-btn-{{ $post->id }}" onclick="likePost({{ $post->id }})">
                                                 @if ($post->likedByUser(auth()->user()))
