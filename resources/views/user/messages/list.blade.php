@@ -78,7 +78,7 @@
                                     </div>
 
                                     <!-- Timestamp: Time since the message was created -->
-                                    <div class="media-left">
+                                    <div class="media-left is-hidden-mobile">
                                         <div class="is-size-7">
                                             @if ($message->receiver_id == auth()->user()->id)
                                                 Message received
