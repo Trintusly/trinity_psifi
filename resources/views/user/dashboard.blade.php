@@ -76,7 +76,7 @@
                         <div class="title is-5 has-text-white mt-2 mb-2">Primary startup</div>
 
                         @if (!$primaryStartup)
-                            Primary startup unset.
+                            <div class="has-text-white">Primary startup unset.</div>
                         @else
                             <div class="box p-2">
                                 <article class="media is-align-items-center">
